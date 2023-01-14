@@ -23,23 +23,27 @@ public class Board extends Pane{
             for(int j = 0; j < this.cells[0].length; j++){
                 Cell cell = new Cell();
                 cell.setOnMouseEntered(e ->{
-                    cell.setStroke(Color.BLUE);
-                    if(cell.isAlive){
-                        cell.setAlive(false);
-                    } else{
-                        cell.setAlive(true);
+                    cell.setStroke(Color.GREEN);
+                    if(e.isShiftDown()){
+                        if(!cell.isAlive) {
+                            cell.setAlive(true);
+                        }
+                    } else if(e.isControlDown()){
+                        if(cell.isAlive){
+                            cell.setAlive(false);
+                        }
                     }
                 });
                 cell.setOnMouseExited(e ->{
                    cell.setStroke(Color.BLACK);
                 });
-                cell.setOnMouseClicked(e ->{
-                    if(cell.isAlive()){
-                        cell.setAlive(false);
-                    } else{
-                        cell.setAlive(true);
-                    }
-                });
+//                cell.setOnMouseClicked(e ->{
+//                    if(cell.isAlive()){
+//                        cell.setAlive(false);
+//                    } else{
+//                        cell.setAlive(true);
+//                    }
+//                });
                 this.cells[i][j] = cell;
             }
         }
