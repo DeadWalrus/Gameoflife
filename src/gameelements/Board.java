@@ -37,13 +37,7 @@ public class Board extends Pane{
                 cell.setOnMouseExited(e ->{
                    cell.setStroke(Color.BLACK);
                 });
-//                cell.setOnMouseClicked(e ->{
-//                    if(cell.isAlive()){
-//                        cell.setAlive(false);
-//                    } else{
-//                        cell.setAlive(true);
-//                    }
-//                });
+
                 this.cells[i][j] = cell;
             }
         }
