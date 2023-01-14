@@ -14,9 +14,6 @@ public class Cell extends Rectangle {
         this.setStroke(Color.BLACK);
     }
 
-    public boolean isAlive(){
-        return this.isAlive;
-    }
     public void setAlive(boolean isAlive){
         this.isAlive = isAlive;
         if(this.isAlive){
@@ -32,9 +29,9 @@ public class Cell extends Rectangle {
     public void updateState(){
         if(this.numNeighbors < 2){
             this.setAlive(false);
-        } else if(this.numNeighbors == 3 && !this.isAlive()){
+        } else if(this.numNeighbors == 3 && !this.isAlive){
             this.setAlive(true);
-        } else if(this.numNeighbors > 3 && this.isAlive()){
+        } else if(this.numNeighbors > 3 && this.isAlive){
             this.setAlive(false);
         }
     }
