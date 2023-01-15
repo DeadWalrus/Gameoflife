@@ -96,24 +96,75 @@ public class Board extends Pane{
 
 
     private void calculateCellNeighborsAndUpdateState(){
-        for(int i = 0; i < this.cells.length; i++){
-            for(int j = 0; j < this.cells[0].length; j++){
-                Cell cell = this.cells[i][j];
-                byte Neighbors = 0;
-                    for(int g = -1; g <= 1; g++){
-                        for(int h = -1; h <= 1; h++){
-                            if(g == 0 && h == 0){
+        for(int x = 0; x < this.cells.length; x++){
+            for(int y = 0; y < this.cells[0].length; y++){
+                Cell cell = this.cells[x][y];
+                byte neighbors = 0;
+                    //check if index is out of bounds, and wrap around grid if so
+                    for(int dx = -1; dx <= 1; dx++){
+                        for(int dy = -1; dy <= 1; dy++){
+                            if(dx == 0 && dy == 0){
                                 continue;
                             }
-                            if((i + g < 0 || i + g >= this.width) || j + h < 0 || j + h >= this.height){
-                                continue;
+                            if(x + dx < 0){
+                                if(y + dy < 0){
+                                    if(cells[this.width-1][this.height-1].isAlive) {
+                                        neighbors++;
+                                        continue;
+                                    }
+                                } else if(y + dy >= this.height){
+                                    if(cells[this.width-1][0].isAlive){
+                                        neighbors++;
+                                        continue;
+                                    }
+                                } else {
+                                    if(this.cells[this.width-1][y + dy].isAlive){
+                                        neighbors++;
+                                        continue;
+                                    }
+                                }
                             }
-                            if(cells[i+g][j+h].isAlive){
-                                Neighbors++;
+
+                            if(x + dx >= this.height){
+                                if(y + dy < 0){
+                                    if(this.cells[0][this.height-1].isAlive){
+                                        neighbors++;
+                                        continue;
+                                    }
+                                }
+                                if(y + dy >= this.height){
+                                    if(this.cells[0][0].isAlive){
+                                        neighbors++;
+                                        continue;
+                                    }
+                                }
+                                if(this.cells[0][y + dy].isAlive){
+                                    neighbors++;
+                                    continue;
+                                }
+                            }else if(y + dy < 0){
+                                if(this.cells[x + dx][this.height-1].isAlive){
+                                    neighbors++;
+                                    continue;
+                                }
+                            } else {
+                                if(y + dy >= this.height){
+                                    if(this.cells[x + dx][0].isAlive){
+                                        neighbors++;
+                                        continue;
+                                    }
+                                }
+                            }
+
+//                            if((i + g < 0 || i + g >= this.width) || j + h < 0 || j + h >= this.height){
+//                                continue;
+//                            }
+                            if(cells[x+dx][y+dy].isAlive){
+                                neighbors++;
                             }
                         }
                     }
-                    cell.setNumNeighbors(Neighbors);
+                    cell.setNumNeighbors(neighbors);
             }
         }
         updateCellStates();

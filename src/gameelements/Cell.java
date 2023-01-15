@@ -40,9 +40,9 @@ public class Cell extends Rectangle {
             case 2:
                 if(this.numNeighbors < 2){
                     this.setAlive(false);
-                } else if(this.numNeighbors == 2 && !this.isAlive){
+                } else if(this.numNeighbors == 3 && !this.isAlive){
                     this.setAlive(true);
-                } else if(this.numNeighbors > 4 && this.isAlive){
+                } else if(this.numNeighbors > 5 && this.isAlive){
                     this.setAlive(false);
                 }
         }
