@@ -9,48 +9,16 @@ public class Board extends Pane{
     private int width;
     private int height;
     private boolean animate = false;
+    private byte gameType;
 
     public Board(int width, int height){
         this.width = width;
         this.height = height;
         this.cells = new Cell[this.width][this.height];
+        this.gameType = 1;
         populateCells();
         addCells();
-    }
 
-    private void populateCells(){
-        for(int i = 0; i < this.cells.length; i++){
-            for(int j = 0; j < this.cells[0].length; j++){
-                Cell cell = new Cell();
-                cell.setOnMouseEntered(e ->{
-                    cell.setStroke(Color.BLUE);
-                    if(e.isShiftDown()){
-                        if(!cell.isAlive){
-                            cell.setAlive(true);
-                        }
-                    } else if(e.isControlDown()){
-                        if(cell.isAlive){
-                            cell.setAlive(false);
-                        }
-                    }
-                });
-                cell.setOnMouseExited(e ->{
-                   cell.setStroke(Color.BLACK);
-                });
-
-                this.cells[i][j] = cell;
-            }
-        }
-    }
-    private void addCells(){
-        for(int i = 0; i < cells.length; i++){
-            for(int j = 0; j < cells[0].length; j++){
-                Cell cell = this.cells[i][j];
-                cell.setLayoutX(i * cell.getWidth());
-                cell.setLayoutY(j * cell.getHeight());
-                getChildren().add(cell);
-            }
-        }
     }
 
     public void setAnimate(boolean animate){
@@ -83,6 +51,50 @@ public class Board extends Pane{
         }
     }
 
+    public void setGameType(byte gameType) throws IllegalArgumentException{
+        if(gameType != 1 && gameType != 2){
+            this.gameType = 1;
+            throw new IllegalArgumentException("Argument '" + gameType + "' is not valid. Default game type used");
+        } else{
+            this.gameType = gameType;
+        }
+    }
+    private void populateCells(){
+        for(int i = 0; i < this.cells.length; i++){
+            for(int j = 0; j < this.cells[0].length; j++){
+                Cell cell = new Cell();
+                cell.setOnMouseEntered(e ->{
+                    cell.setStroke(Color.BLUE);
+                    if(e.isShiftDown()){
+                        if(!cell.isAlive){
+                            cell.setAlive(true);
+                        }
+                    } else if(e.isControlDown()){
+                        if(cell.isAlive){
+                            cell.setAlive(false);
+                        }
+                    }
+                });
+                cell.setOnMouseExited(e ->{
+                    cell.setStroke(Color.BLACK);
+                });
+
+                this.cells[i][j] = cell;
+            }
+        }
+    }
+    private void addCells(){
+        for(int i = 0; i < cells.length; i++){
+            for(int j = 0; j < cells[0].length; j++){
+                Cell cell = this.cells[i][j];
+                cell.setLayoutX(i * cell.getWidth());
+                cell.setLayoutY(j * cell.getHeight());
+                getChildren().add(cell);
+            }
+        }
+    }
+
+
     private void calculateCellNeighborsAndUpdateState(){
         for(int i = 0; i < this.cells.length; i++){
             for(int j = 0; j < this.cells[0].length; j++){
@@ -109,7 +121,7 @@ public class Board extends Pane{
     private void updateCellStates(){
         for(int i = 0; i < this.cells.length; i++){
             for(int j = 0; j < this.cells[0].length; j++){
-                this.cells[i][j].updateState();
+                this.cells[i][j].updateState(this.gameType);
             }
         }
     }
