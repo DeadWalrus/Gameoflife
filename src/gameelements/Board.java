@@ -106,60 +106,23 @@ public class Board extends Pane{
                             if(dx == 0 && dy == 0){
                                 continue;
                             }
-                            if(x + dx < 0){
-                                if(y + dy < 0){
-                                    if(cells[this.width-1][this.height-1].isAlive) {
-                                        neighbors++;
-                                        continue;
-                                    }
-                                } else if(y + dy >= this.height){
-                                    if(cells[this.width-1][0].isAlive){
-                                        neighbors++;
-                                        continue;
-                                    }
-                                } else {
-                                    if(this.cells[this.width-1][y + dy].isAlive){
-                                        neighbors++;
-                                        continue;
-                                    }
-                                }
+
+                            int nx = x + dx; //used for wrapping
+                            int ny = y + dy;
+
+                            if(nx < 0){
+                                nx = this.width-1;
+                            }else if(nx >= this.width){
+                                nx = this.width / nx;
                             }
 
-                            if(x + dx >= this.height){
-                                if(y + dy < 0){
-                                    if(this.cells[0][this.height-1].isAlive){
-                                        neighbors++;
-                                        continue;
-                                    }
-                                }
-                                if(y + dy >= this.height){
-                                    if(this.cells[0][0].isAlive){
-                                        neighbors++;
-                                        continue;
-                                    }
-                                }
-                                if(this.cells[0][y + dy].isAlive){
-                                    neighbors++;
-                                    continue;
-                                }
-                            }else if(y + dy < 0){
-                                if(this.cells[x + dx][this.height-1].isAlive){
-                                    neighbors++;
-                                    continue;
-                                }
-                            } else {
-                                if(y + dy >= this.height){
-                                    if(this.cells[x + dx][0].isAlive){
-                                        neighbors++;
-                                        continue;
-                                    }
-                                }
+                            if(ny < 0){
+                                ny = this.height-1;
+                            } else if(ny >= this.height){
+                                ny = this.height / ny;
                             }
 
-//                            if((i + g < 0 || i + g >= this.width) || j + h < 0 || j + h >= this.height){
-//                                continue;
-//                            }
-                            if(cells[x+dx][y+dy].isAlive){
+                            if(cells[nx][ny].isAlive){
                                 neighbors++;
                             }
                         }
