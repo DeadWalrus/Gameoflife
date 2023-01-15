@@ -19,12 +19,13 @@ public class Main extends Application{
     @Override
     public void start(Stage stage) throws Exception {
         BorderPane mainPane = new BorderPane();
-        mainPane.setPrefSize(500, 525);
+        mainPane.setPrefSize(500, 530);
         Board gameBoard = new Board(100, 100);
         mainPane.setCenter(gameBoard);
         mainPane.setBottom(new GameControl(gameBoard));
         Scene mainScene = new Scene(mainPane);
         stage.setScene(mainScene);
+        stage.setResizable(false);
         stage.setTitle("Conway's Game of Life");
         stage.show();
     }
