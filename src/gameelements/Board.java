@@ -112,14 +112,18 @@ public class Board extends Pane{
 
                             if(nx < 0){
                                 nx = this.width-1;
+                                System.out.println("1 " + nx);
                             }else if(nx >= this.width){
-                                nx = this.width / nx;
+                                nx = this.width / nx - 1;
+                                System.out.println("2" + nx);
                             }
 
                             if(ny < 0){
                                 ny = this.height-1;
+                                System.out.println("1" + ny);
                             } else if(ny >= this.height){
-                                ny = this.height / ny;
+                                ny = this.height / ny - 1;
+                                System.out.println("2" + ny);
                             }
 
                             if(cells[nx][ny].isAlive){
