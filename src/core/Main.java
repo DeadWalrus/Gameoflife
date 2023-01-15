@@ -27,9 +27,5 @@ public class Main extends Application{
         stage.setScene(mainScene);
         stage.setTitle("Conway's Game of Life");
         stage.show();
-        Timeline gameLoop = new Timeline();
-        gameLoop.setCycleCount(Timeline.INDEFINITE);
-        gameLoop.getKeyFrames().add(new KeyFrame(Duration.millis(100), actionEvent -> gameBoard.updateBoard()));
-        gameLoop.play();
     }
 }
