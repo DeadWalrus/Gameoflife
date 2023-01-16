@@ -1,12 +1,10 @@
 package core;
+
 import gameelements.Board;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import uielements.GameControl;
 
 public class Main extends Application{
@@ -17,7 +15,7 @@ public class Main extends Application{
     }
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage){
         BorderPane mainPane = new BorderPane();
         mainPane.setPrefSize(500, 530);
         Board gameBoard = new Board(100, 100);
