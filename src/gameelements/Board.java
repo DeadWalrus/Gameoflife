@@ -29,14 +29,6 @@ public class Board extends Pane{
     }
     public void updateBoard(){
         if(this.animate) {
-            for (int i = 0; i < this.cells.length; i++) {
-                for (int j = 0; j < this.cells[0].length; j++) {
-                    Cell cell = this.cells[i][j];
-                    if (cell.isAlive) {
-                        cell.setFill(Color.GREEN);
-                    }
-                }
-            }
             this.calculateCellNeighborsAndUpdateState();
         }
     }
