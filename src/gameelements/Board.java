@@ -1,20 +1,20 @@
 package gameelements;
 
-import javafx.scene.layout.FlowPane;
+
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 public class Board extends Pane{
-    private Cell[][] cells;
-    private int width;
-    private int height;
+    private final Cell[][] cells;
+    private final int WIDTH;
+    private final int HEIGHT;
     private boolean animate = false;
     private byte gameType;
 
     public Board(int width, int height){
-        this.width = width;
-        this.height = height;
-        this.cells = new Cell[this.width][this.height];
+        this.WIDTH = width;
+        this.HEIGHT = height;
+        this.cells = new Cell[this.WIDTH][this.HEIGHT];
         this.gameType = 1;
         populateCells();
         addCells();
@@ -29,15 +29,23 @@ public class Board extends Pane{
     }
     public void updateBoard(){
         if(this.animate) {
+            for (Cell[] cellArr : this.cells) {
+                for (int j = 0; j < this.cells[0].length; j++) {
+                    Cell cell = cellArr[j];
+                    if (cell.isAlive) {
+                        cell.setFill(Color.GREEN);
+                    }
+                }
+            }
             this.calculateCellNeighborsAndUpdateState();
         }
     }
 
     public void clearBoard(){
         this.animate = false;
-        for(int i = 0; i < this.cells.length; i++){
+        for(Cell[] cellArr : this.cells){
             for(int j = 0; j < this.cells[0].length; j++){
-                Cell cell = this.cells[i][j];
+                Cell cell = cellArr[j];
                 cell.setAlive(false);
             }
         }
@@ -67,9 +75,7 @@ public class Board extends Pane{
                         }
                     }
                 });
-                cell.setOnMouseExited(e ->{
-                    cell.setStroke(Color.BLACK);
-                });
+                cell.setOnMouseExited(e -> cell.setStroke(Color.BLACK));
 
                 this.cells[i][j] = cell;
             }
@@ -88,32 +94,46 @@ public class Board extends Pane{
 
 
     private void calculateCellNeighborsAndUpdateState(){
-        for(int i = 0; i < this.cells.length; i++){
-            for(int j = 0; j < this.cells[0].length; j++){
-                Cell cell = this.cells[i][j];
-                byte Neighbors = 0;
-                    for(int g = -1; g <= 1; g++){
-                        for(int h = -1; h <= 1; h++){
-                            if(g == 0 && h == 0){
+        for(int x = 0; x < this.cells.length; x++){
+            for(int y = 0; y < this.cells[0].length; y++){
+                Cell cell = this.cells[x][y];
+                byte neighbors = 0;
+                    //check if index is out of bounds, and wrap around grid if so
+                    for(int dx = -1; dx <= 1; dx++){
+                        for(int dy = -1; dy <= 1; dy++){
+                            if(dx == 0 && dy == 0){
                                 continue;
                             }
-                            if((i + g < 0 || i + g >= this.width) || j + h < 0 || j + h >= this.height){
-                                continue;
+
+                            int nx = x + dx; //used for wrapping
+                            int ny = y + dy;
+
+                            if(nx < 0){
+                                nx = this.WIDTH -1;
+                            }else if(nx >= this.WIDTH){
+                                nx = this.WIDTH / nx - 1;
                             }
-                            if(cells[i+g][j+h].isAlive){
-                                Neighbors++;
+
+                            if(ny < 0){
+                                ny = this.HEIGHT -1;
+                            } else if(ny >= this.HEIGHT){
+                                ny = this.HEIGHT / ny - 1;
+                            }
+
+                            if(cells[nx][ny].isAlive){
+                                neighbors++;
                             }
                         }
                     }
-                    cell.setNumNeighbors(Neighbors);
+                    cell.setNumNeighbors(neighbors);
             }
         }
         updateCellStates();
     }
     private void updateCellStates(){
-        for(int i = 0; i < this.cells.length; i++){
+        for(Cell[] cellArr : this.cells){
             for(int j = 0; j < this.cells[0].length; j++){
-                this.cells[i][j].updateState(this.gameType);
+                cellArr[j].updateState(this.gameType);
             }
         }
     }

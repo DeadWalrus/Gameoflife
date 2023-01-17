@@ -16,12 +16,9 @@ public class GameControl extends HBox {
     private Button btPlay;
     private Button btClear;
     private ComboBox<String> cbGameType;
-    private Timeline tlGameLoop;
-    private byte gameType;
 
     public GameControl(Board gameBoard){
         this.gameBoard = gameBoard;
-        this.gameType = 1;
         initButtons();
         initComboBox();
         initAnimation();
@@ -33,9 +30,8 @@ public class GameControl extends HBox {
     private void initButtons(){
         this.btPlay = new Button("Play/Pause");
 
-        this.btPlay.setOnAction(e -> {
-            this.gameBoard.setAnimate(!this.gameBoard.getAnimate());
-        });
+        this.btPlay.setOnAction(e -> this.gameBoard.setAnimate(!this.gameBoard.getAnimate()));
+
         this.btClear = new Button("Clear");
         this.btClear.setOnAction(e -> this.gameBoard.clearBoard());
     }
@@ -57,9 +53,9 @@ public class GameControl extends HBox {
     }
 
     private void initAnimation(){
-        this.tlGameLoop = new Timeline();
-        this.tlGameLoop.setCycleCount(Timeline.INDEFINITE);
-        this.tlGameLoop.getKeyFrames().add(new KeyFrame(Duration.millis(100), actionEvent -> this.gameBoard.updateBoard()));
-        this.tlGameLoop.play();
+        Timeline tlGameLoop = new Timeline();
+        tlGameLoop.setCycleCount(Timeline.INDEFINITE);
+        tlGameLoop.getKeyFrames().add(new KeyFrame(Duration.millis(100), actionEvent -> this.gameBoard.updateBoard()));
+        tlGameLoop.play();
     }
 }
