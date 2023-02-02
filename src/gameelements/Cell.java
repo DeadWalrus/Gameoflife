@@ -28,21 +28,24 @@ public class Cell extends Rectangle {
 
     public void updateState(byte gameType){
         switch(gameType) {
+            //default game of life
             case 1 -> {
-                if (this.numNeighbors < 2) {
+                if (this.isAlive && this.numNeighbors < 2) {
                     this.setAlive(false);
-                } else if (this.numNeighbors == 3 && !this.isAlive) {
+                } else if (!this.isAlive && this.numNeighbors == 3) {
                     this.setAlive(true);
-                } else if (this.numNeighbors > 3 && this.isAlive) {
+                } else if (this.isAlive && this.numNeighbors > 3) {
                     this.setAlive(false);
                 }
             }
+
+            //a game of growth
             case 2 -> {
-                if (this.numNeighbors < 2) {
+                if (this.isAlive && this.numNeighbors < 2) {
                     this.setAlive(false);
-                } else if (this.numNeighbors == 2 && !this.isAlive) {
+                } else if (!this.isAlive && this.numNeighbors == 2) {
                     this.setAlive(true);
-                } else if (this.numNeighbors > 5 && this.isAlive) {
+                } else if (this.isAlive && this.numNeighbors > 5) {
                     this.setAlive(false);
                 }
             }
