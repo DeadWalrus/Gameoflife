@@ -98,7 +98,6 @@ public class Board extends Pane{
             for(int y = 0; y < this.cells[0].length; y++){
                 Cell cell = this.cells[x][y];
                 byte neighbors = 0;
-                    //check if index is out of bounds, and wrap around grid if so
                     for(int dx = -1; dx <= 1; dx++){
                         for(int dy = -1; dy <= 1; dy++){
                             if(dx == 0 && dy == 0){
@@ -108,6 +107,7 @@ public class Board extends Pane{
                             int nx = x + dx; //used for wrapping
                             int ny = y + dy;
 
+                            //check if out of bounds, and wrap around grid if so.
                             if(nx < 0){
                                 nx = this.WIDTH -1;
                             }else if(nx >= this.WIDTH){
