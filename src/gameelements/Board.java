@@ -110,7 +110,7 @@ public class Board extends Pane{
                             //check if out of bounds, and wrap around grid if so.
                             if(nx < 0){
                                 nx = this.WIDTH -1;
-                            }else if(nx >= this.WIDTH){
+                            }else if(nx >= this.WIDTH && nx != 0){
                                 nx = this.WIDTH / nx - 1;
                             }
 
